@@ -22,8 +22,8 @@ func (s *SDL2) Init() error {
 }
 
 // CreateWindow starts a new window and renderer which is ready to draw to
-func (s *SDL2) CreateWindow(x, y int, title string) error {
-	w, err := sdl.CreateWindow(title, sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED, int32(x), int32(y), sdl.WINDOW_SHOWN)
+func (s *SDL2) CreateWindow(x, y int32, title string) error {
+	w, err := sdl.CreateWindow(title, sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED, x, y, sdl.WINDOW_SHOWN)
 	if err != nil {
 		return fmt.Errorf("error creating sdl window: %v", err)
 	}

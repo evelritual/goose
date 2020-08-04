@@ -1,9 +1,10 @@
 package goose
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/PapayaJuice/goose/drivers/sdl2"
+	"github.com/PapayaJuice/goose/texture"
 )
 
 const (
@@ -12,32 +13,36 @@ const (
 )
 
 var (
-	driverMap = map[string]Driver{
+	activeDriver driver
+	driverMap    = map[string]driver{
 		DriverSDL2: &sdl2.SDL2{},
 	}
 )
 
-// Driver declares all methods needed to implement a functional driver. Drivers
+// driver declares all methods needed to implement a functional driver. Drivers
 // are used for basic interactions between the system and Goose such as drawing
-//  to screen, input, audio, and more.
-type Driver interface {
+// to screen, input, audio, and more.
+type driver interface {
 	Init() error
-	CreateWindow(x, y int, title string) error
+	CreateWindow(x, y int32, title string) error
 	Close()
+	NewTexture(imgPath string) (texture.Texture, error)
 	PreDraw() error
 	PostDraw()
 	Update() error
 }
 
-func getDriver(driver string) (Driver, error) {
+// setDriver sets the given driver as the default.
+func setDriver(driver string) {
 	d, exists := driverMap[driver]
 	if !exists {
-		return nil, fmt.Errorf("no such driver: %s", driver)
+		log.Fatalf("no such driver: %s", driver)
 	}
 
 	err := d.Init()
 	if err != nil {
-		return nil, fmt.Errorf("error initializing driver %s: %v", driver, err)
+		log.Fatalf("error initializing driver %s: %v", driver, err)
 	}
-	return d, nil
+
+	activeDriver = d
 }
