@@ -9,8 +9,8 @@ import (
 var (
 	targetDriver = DriverSDL2
 	targetFPS    = 60
-	windowX      = 320
-	windowY      = 240
+	windowX      = int32(320)
+	windowY      = int32(240)
 	windowTitle  = "Goose Engine"
 )
 
@@ -23,13 +23,10 @@ func Run(game Game) error {
 	}
 
 	// Init window
-	d, err := getDriver(targetDriver)
-	if err != nil {
-		return fmt.Errorf("error getting driver: %v", err)
-	}
-	defer d.Close()
+	setDriver(targetDriver)
+	defer activeDriver.Close()
 
-	err = d.CreateWindow(windowX, windowY, windowTitle)
+	err := activeDriver.CreateWindow(windowX, windowY, windowTitle)
 	if err != nil {
 		return fmt.Errorf("error creating window: %v", err)
 	}
@@ -41,7 +38,7 @@ func Run(game Game) error {
 
 	for range time.Tick(time.Duration(fpst) * time.Millisecond) {
 		// Update driver state first
-		err = d.Update()
+		err = activeDriver.Update()
 		if err != nil {
 			break
 		}
@@ -51,12 +48,12 @@ func Run(game Game) error {
 			break
 		}
 
-		err = d.PreDraw()
+		err = activeDriver.PreDraw()
 		if err != nil {
 			break
 		}
 		game.Draw()
-		d.PostDraw()
+		activeDriver.PostDraw()
 	}
 	return err
 }

@@ -1,12 +1,11 @@
 package goose
 
-// Texture ...
-type Texture interface {
-	Close()
-	Draw()
-}
+import (
+	"github.com/PapayaJuice/goose/texture"
+)
 
-// LoadTexture ...
-func LoadTexture(path string) (Texture, error) {
-	return nil, nil
+// NewTexture loads a new texture for use in drawing. Texture must be closed
+// after use.
+func NewTexture(imgPath string) (texture.Texture, error) {
+	return (activeDriver.NewTexture(imgPath))
 }
