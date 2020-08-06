@@ -3,6 +3,8 @@ package goose
 import (
 	"log"
 
+	"github.com/PapayaJuice/goose/internal/input"
+
 	"github.com/PapayaJuice/goose/drivers/sdl2"
 	"github.com/PapayaJuice/goose/internal/texture"
 )
@@ -26,6 +28,7 @@ type driver interface {
 	Init() error
 	CreateWindow(x, y int32, title string) error
 	Close()
+	NewKeyboard() input.Keyboard
 	NewTexture(imgPath string) (texture.Texture, error)
 	PreDraw() error
 	PostDraw()

@@ -3,6 +3,8 @@ package goose
 import (
 	"fmt"
 
+	"github.com/PapayaJuice/goose/internal/input"
+
 	"github.com/PapayaJuice/goose/internal/texture"
 )
 
@@ -19,20 +21,25 @@ type Game interface {
 }
 
 type defaultGame struct {
-	tex    texture.Texture
-	texX   int32
-	texY   int32
-	speedX int32
-	speedY int32
+	keyboard input.Keyboard
+
+	tex        texture.Texture
+	shouldDraw bool
+	texX       int32
+	texY       int32
+	speedX     int32
+	speedY     int32
 }
 
 // Init ...
 func (d *defaultGame) Init() error {
+	d.keyboard = NewKeyboard()
 	t, err := NewTexture(defaultImage)
 	if err != nil {
 		return fmt.Errorf("error loading default image: %v", err)
 	}
 	d.tex = t
+	d.shouldDraw = true
 
 	d.texX = (windowX / 2) - (d.tex.W() / 16)
 	d.texY = (windowY / 2) - (d.tex.H() / 16)
@@ -49,6 +56,10 @@ func (d *defaultGame) Draw() error {
 		return nil
 	}
 
+	if !d.shouldDraw {
+		return nil
+	}
+
 	err := d.tex.Draw(d.texX, d.texY, 0.125, 0.125)
 	if err != nil {
 		return fmt.Errorf("error drawing default image: %v", err)
@@ -58,6 +69,13 @@ func (d *defaultGame) Draw() error {
 
 // Update ...
 func (d *defaultGame) Update() error {
+	if d.keyboard.IsKeyPress(input.KeySpace) {
+		d.shouldDraw = false
+	}
+	if d.keyboard.IsKeyRelease(input.KeySpace) {
+		d.shouldDraw = true
+	}
+
 	if d.texX <= 0 || d.texX+(d.tex.W()/8) >= windowX {
 		d.speedX = 0 - d.speedX
 	}
