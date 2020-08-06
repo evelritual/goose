@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/PapayaJuice/goose/drivers/sdl2"
-	"github.com/PapayaJuice/goose/texture"
+	"github.com/PapayaJuice/goose/internal/texture"
 )
 
 const (
