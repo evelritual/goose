@@ -10,6 +10,8 @@ import (
 type SDL2 struct {
 	renderer *sdl.Renderer
 	window   *sdl.Window
+
+	keyboard *Keyboard
 }
 
 // Init initializes everything in the SDL2 library
@@ -69,10 +71,15 @@ func (s *SDL2) PostDraw() {
 func (s *SDL2) Update() error {
 	for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
 		// TODO apply keyboard state from t
-		// switch t := event.(type) {
-		switch event.(type) {
+		switch t := event.(type) {
 		case *sdl.QuitEvent:
 			return fmt.Errorf("exit")
+		case *sdl.KeyboardEvent:
+			if s.keyboard == nil {
+				break
+			}
+			// TODO handle unknown key press
+			s.keyboard.UpdateKey(keyMap[t.Keysym.Sym], t.State == sdl.PRESSED, t.Repeat != 0)
 		}
 	}
 	return nil
