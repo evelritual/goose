@@ -1,7 +1,7 @@
 package goose
 
 import (
-	"github.com/PapayaJuice/goose/texture"
+	"github.com/PapayaJuice/goose/internal/texture"
 )
 
 // NewTexture loads a new texture for use in drawing. Texture must be closed

@@ -31,11 +31,17 @@ func Run(game Game) error {
 		return fmt.Errorf("error creating window: %v", err)
 	}
 
+	// Init game
+	err = game.Init()
+	if err != nil {
+		return fmt.Errorf("error initializing game: %v", err)
+	}
+	defer game.Close()
+
 	// Run loop
 	// Cap at target FPS
 	// TODO Allow when targetFPS = 0 (unlimited)
 	fpst := 1000 / targetFPS
-
 	for range time.Tick(time.Duration(fpst) * time.Millisecond) {
 		// Update driver state first
 		err = activeDriver.Update()

@@ -29,7 +29,7 @@ func (s *SDL2) CreateWindow(x, y int32, title string) error {
 	}
 	s.window = w
 
-	r, err := sdl.CreateRenderer(w, -1, sdl.RENDERER_ACCELERATED)
+	r, err := sdl.CreateRenderer(w, -1, sdl.RENDERER_ACCELERATED|sdl.RENDERER_PRESENTVSYNC)
 	if err != nil {
 		return fmt.Errorf("error creating sdl renderer: %v", err)
 	}

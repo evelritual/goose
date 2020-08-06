@@ -6,7 +6,7 @@ import (
 	"github.com/veandco/go-sdl2/img"
 	"github.com/veandco/go-sdl2/sdl"
 
-	"github.com/PapayaJuice/goose/texture"
+	"github.com/PapayaJuice/goose/internal/texture"
 )
 
 // Texture ...
@@ -77,7 +77,12 @@ func (t *Texture) Draw(x, y int32, scaleX, scaleY float32) error {
 }
 
 // Close releases the texture and the image from memory.
-func (t *Texture) Close() {
-	t.texture.Destroy()
+func (t *Texture) Close() error {
+	err := t.texture.Destroy()
+	if err != nil {
+		return fmt.Errorf("error destroying sdl texture: %v", err)
+	}
+
 	t.image.Free()
+	return nil
 }
