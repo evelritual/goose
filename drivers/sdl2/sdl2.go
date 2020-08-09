@@ -69,6 +69,12 @@ func (s *SDL2) PostDraw() {
 // Update parses through all new events SDL reports on and updates the state
 // accordingly.
 func (s *SDL2) Update() error {
+	// Reset all keys that were just pressed
+	for _, s := range s.keyboard.keyStates {
+		s.Repeat = true
+	}
+
+	// Poll SDL events
 	for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
 		// TODO apply keyboard state from t
 		switch t := event.(type) {
