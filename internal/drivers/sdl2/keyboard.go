@@ -1,7 +1,7 @@
 package sdl2
 
 import (
-	"github.com/PapayaJuice/goose/internal/input"
+	"github.com/PapayaJuice/goose/input"
 )
 
 // Keyboard ...

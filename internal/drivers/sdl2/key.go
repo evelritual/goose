@@ -3,7 +3,7 @@ package sdl2
 import (
 	"github.com/veandco/go-sdl2/sdl"
 
-	"github.com/PapayaJuice/goose/internal/input"
+	"github.com/PapayaJuice/goose/input"
 )
 
 var (

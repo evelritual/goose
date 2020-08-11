@@ -6,21 +6,19 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/PapayaJuice/goose/internal/texture"
-
-	"github.com/PapayaJuice/goose/internal/input"
-
 	"github.com/PapayaJuice/goose"
+	"github.com/PapayaJuice/goose/graphics"
+	"github.com/PapayaJuice/goose/input"
 )
 
 // Game ...
 type Game struct {
 	keyboard input.Keyboard
 
-	bulletTexture texture.Texture
+	bulletTexture graphics.Texture
 	bullets       []*Bullet
 
-	enemyTexture texture.Texture
+	enemyTexture graphics.Texture
 	enemyTicker  *time.Ticker
 	enemies      []*Enemy
 

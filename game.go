@@ -3,9 +3,8 @@ package goose
 import (
 	"fmt"
 
-	"github.com/PapayaJuice/goose/internal/input"
-
-	"github.com/PapayaJuice/goose/internal/texture"
+	"github.com/PapayaJuice/goose/graphics"
+	"github.com/PapayaJuice/goose/input"
 )
 
 const (
@@ -23,7 +22,7 @@ type Game interface {
 type defaultGame struct {
 	keyboard input.Keyboard
 
-	tex        texture.Texture
+	tex        graphics.Texture
 	shouldDraw bool
 	texX       int32
 	texY       int32
