@@ -76,7 +76,6 @@ func (s *SDL2) Update() error {
 
 	// Poll SDL events
 	for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
-		// TODO apply keyboard state from t
 		switch t := event.(type) {
 		case *sdl.QuitEvent:
 			return fmt.Errorf("exit")
