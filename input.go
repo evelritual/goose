@@ -1,6 +1,6 @@
 package goose
 
-import "github.com/PapayaJuice/goose/internal/input"
+import "github.com/PapayaJuice/goose/input"
 
 // NewKeyboard initializes a new keyboard for use based on the active driver.
 func NewKeyboard() input.Keyboard {

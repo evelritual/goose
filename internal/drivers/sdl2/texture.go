@@ -6,7 +6,7 @@ import (
 	"github.com/veandco/go-sdl2/img"
 	"github.com/veandco/go-sdl2/sdl"
 
-	"github.com/PapayaJuice/goose/internal/texture"
+	"github.com/PapayaJuice/goose/graphics"
 )
 
 // Texture ...
@@ -22,7 +22,7 @@ type Texture struct {
 
 // NewTexture loads an image as an SDL texture. Texture must be closed
 // manually.
-func (s *SDL2) NewTexture(imgPath string) (texture.Texture, error) {
+func (s *SDL2) NewTexture(imgPath string) (graphics.Texture, error) {
 	img, err := img.Load(imgPath)
 	if err != nil {
 		return nil, fmt.Errorf("error loading image: %v", err)

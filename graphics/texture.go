@@ -1,4 +1,4 @@
-package texture
+package graphics
 
 // Texture declares all methods required to draw a texture.
 type Texture interface {
