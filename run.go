@@ -9,9 +9,6 @@ import (
 var (
 	targetDriver = DriverSDL2
 	targetFPS    = 60
-	windowX      = int32(320)
-	windowY      = int32(240)
-	windowTitle  = "Goose Engine"
 )
 
 // Run starts the main game loop of the Goose engine using the Update and Draw
