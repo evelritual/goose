@@ -1,10 +1,17 @@
 package goose
 
+import "github.com/PapayaJuice/goose/graphics"
+
 var (
-	windowTitle = "Goose Engine"
-	windowX     = int32(320)
-	windowY     = int32(240)
+	windowTitle       = "Goose Engine"
+	windowX     int32 = 320
+	windowY     int32 = 240
 )
+
+// SetBackgroundColor sets the RGB value of the screen clear before each frame.
+func SetBackgroundColor(color *graphics.Color) {
+	activeDriver.SetBackgroundColor(color)
+}
 
 // SetWindowSize sets the x and y of the screen before creation. It has no
 // effect after a window is created.

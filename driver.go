@@ -31,6 +31,7 @@ type driver interface {
 	NewTexture(imgPath string) (graphics.Texture, error)
 	PreDraw() error
 	PostDraw()
+	SetBackgroundColor(color *graphics.Color)
 	Update() error
 }
 

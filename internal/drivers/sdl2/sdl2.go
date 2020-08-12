@@ -4,12 +4,15 @@ import (
 	"fmt"
 
 	"github.com/veandco/go-sdl2/sdl"
+
+	"github.com/PapayaJuice/goose/graphics"
 )
 
 // SDL2 implements the Driver interface
 type SDL2 struct {
-	renderer *sdl.Renderer
-	window   *sdl.Window
+	clearColor *graphics.Color
+	renderer   *sdl.Renderer
+	window     *sdl.Window
 
 	keyboard *Keyboard
 }
@@ -20,10 +23,12 @@ func (s *SDL2) Init() error {
 	if err != nil {
 		return fmt.Errorf("error initializing sdl: %v", err)
 	}
+
+	s.clearColor = &graphics.ColorBlack
 	return nil
 }
 
-// CreateWindow starts a new window and renderer which is ready to draw to
+// CreateWindow starts a new window and renderer which is ready to draw to.
 func (s *SDL2) CreateWindow(x, y int32, title string) error {
 	w, err := sdl.CreateWindow(title, sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED, x, y, sdl.WINDOW_SHOWN)
 	if err != nil {
@@ -46,9 +51,14 @@ func (s *SDL2) CreateWindow(x, y int32, title string) error {
 	return nil
 }
 
-// PreDraw flushes the renderer and sets up for drawing
+// SetBackgroundColor sets the RGB value of the screen clear before each frame.
+func (s *SDL2) SetBackgroundColor(color *graphics.Color) {
+	s.clearColor = color
+}
+
+// PreDraw flushes the renderer and sets up for drawing.
 func (s *SDL2) PreDraw() error {
-	err := s.renderer.SetDrawColor(0, 0, 0, 0)
+	err := s.renderer.SetDrawColor(s.clearColor.R, s.clearColor.G, s.clearColor.B, s.clearColor.A)
 	if err != nil {
 		return fmt.Errorf("error setting renderer draw color: %v", err)
 	}
@@ -61,7 +71,7 @@ func (s *SDL2) PreDraw() error {
 	return nil
 }
 
-// PostDraw writes all new bytes to the renderer
+// PostDraw writes all new bytes to the renderer.
 func (s *SDL2) PostDraw() {
 	s.renderer.Present()
 }
