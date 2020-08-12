@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	defaultImage = "../../goose.png"
+	defaultImage = "../../logo.png"
 )
 
 // Game declares all methods required to run a game
@@ -32,6 +32,7 @@ type defaultGame struct {
 
 // Init ...
 func (d *defaultGame) Init() error {
+	SetBackgroundColor(&graphics.ColorWhite)
 	d.keyboard = NewKeyboard()
 	t, err := NewTexture(defaultImage)
 	if err != nil {
