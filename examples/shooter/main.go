@@ -14,6 +14,8 @@ import (
 // Game ...
 type Game struct {
 	keyboard input.Keyboard
+	font     graphics.Font
+	score    int
 
 	bulletTexture graphics.Texture
 	bullets       []*Bullet
@@ -54,6 +56,12 @@ func (g *Game) Init() error {
 	}
 	g.bulletTexture = bt
 
+	f, err := goose.NewFont("assets/font.ttf", 16)
+	if err != nil {
+		return fmt.Errorf("error loading font: %v", err)
+	}
+	g.font = f
+
 	return nil
 }
 
@@ -74,6 +82,11 @@ func (g *Game) Close() error {
 	err = g.bulletTexture.Close()
 	if err != nil {
 		return fmt.Errorf("error closing bullet texture: %v", err)
+	}
+
+	err = g.font.Close()
+	if err != nil {
+		return fmt.Errorf("error closing font: %v", err)
 	}
 
 	return nil
@@ -118,36 +131,28 @@ func (g *Game) Update() error {
 	default:
 	}
 
-	remEnemies := []int{}
-	for i, e := range g.enemies {
+	newEnemies := []*Enemy{}
+	for _, e := range g.enemies {
 		if e.destroyed || e.y > goose.GetWindowY() {
-			remEnemies = append(remEnemies, i)
 			continue
 		}
 
+		newEnemies = append(newEnemies, e)
 		e.y += e.speed
 	}
-
-	for _, ei := range remEnemies {
-		g.enemies[ei] = g.enemies[len(g.enemies)-1]
-		g.enemies = g.enemies[:len(g.enemies)-1]
-	}
+	g.enemies = newEnemies
 
 	// Bullets
-	remBullets := []int{}
-	for i, b := range g.bullets {
+	newBullets := []*Bullet{}
+	for _, b := range g.bullets {
 		if b.destroyed || b.y < 0 {
-			remBullets = append(remBullets, i)
 			continue
 		}
 
+		newBullets = append(newBullets, b)
 		b.y -= b.speed
 	}
-
-	for _, bi := range remBullets {
-		g.bullets[bi] = g.bullets[len(g.bullets)-1]
-		g.bullets = g.bullets[:len(g.bullets)-1]
-	}
+	g.bullets = newBullets
 
 	// This is terrible collision detection but whatever
 	for _, b := range g.bullets {
@@ -167,6 +172,7 @@ func (g *Game) Update() error {
 			// Otherwise, collision
 			b.destroyed = true
 			e.destroyed = true
+			g.score += 10
 		}
 	}
 
@@ -193,6 +199,13 @@ func (g *Game) Draw() error {
 			return fmt.Errorf("error drawing bullet texture: %v", err)
 		}
 	}
+
+	// UI
+	err = g.font.Draw(fmt.Sprintf("Score: %d", g.score), 5, 0, graphics.ColorWhite)
+	if err != nil {
+		return fmt.Errorf("error drawing font: %v", err)
+	}
+
 	return nil
 }
 

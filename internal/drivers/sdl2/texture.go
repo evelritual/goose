@@ -9,7 +9,7 @@ import (
 	"github.com/PapayaJuice/goose/graphics"
 )
 
-// Texture ...
+// Texture wraps an SDL Texture and allows writing to screen.
 type Texture struct {
 	renderer *sdl.Renderer // reference to renderer to use
 
