@@ -3,12 +3,14 @@ package sdl2
 import (
 	"fmt"
 
+	"github.com/veandco/go-sdl2/ttf"
+
 	"github.com/veandco/go-sdl2/sdl"
 
 	"github.com/PapayaJuice/goose/graphics"
 )
 
-// SDL2 implements the Driver interface
+// SDL2 implements the Driver interface.
 type SDL2 struct {
 	clearColor *graphics.Color
 	renderer   *sdl.Renderer
@@ -17,11 +19,16 @@ type SDL2 struct {
 	keyboard *Keyboard
 }
 
-// Init initializes everything in the SDL2 library
+// Init initializes everything in the SDL2 library.
 func (s *SDL2) Init() error {
 	err := sdl.Init(sdl.INIT_EVERYTHING)
 	if err != nil {
 		return fmt.Errorf("error initializing sdl: %v", err)
+	}
+
+	err = ttf.Init()
+	if err != nil {
+		return fmt.Errorf("error initializing ttf: %v", err)
 	}
 
 	s.clearColor = &graphics.ColorBlack

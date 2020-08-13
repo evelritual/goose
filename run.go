@@ -55,7 +55,10 @@ func Run(game Game) error {
 		if err != nil {
 			break
 		}
-		game.Draw()
+		err = game.Draw()
+		if err != nil {
+			break
+		}
 		activeDriver.PostDraw()
 	}
 	return err

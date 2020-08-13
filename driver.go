@@ -27,6 +27,7 @@ type driver interface {
 	Init() error
 	CreateWindow(x, y int32, title string) error
 	Close()
+	NewFont(fontPath string, size int) (graphics.Font, error)
 	NewKeyboard() input.Keyboard
 	NewTexture(imgPath string) (graphics.Texture, error)
 	PreDraw() error
