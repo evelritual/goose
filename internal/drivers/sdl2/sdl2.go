@@ -3,9 +3,8 @@ package sdl2
 import (
 	"fmt"
 
-	"github.com/veandco/go-sdl2/ttf"
-
 	"github.com/veandco/go-sdl2/sdl"
+	"github.com/veandco/go-sdl2/ttf"
 
 	"github.com/PapayaJuice/goose/graphics"
 )

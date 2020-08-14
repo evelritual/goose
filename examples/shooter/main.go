@@ -7,28 +7,47 @@ import (
 	"time"
 
 	"github.com/PapayaJuice/goose"
+	"github.com/PapayaJuice/goose/audio"
 	"github.com/PapayaJuice/goose/graphics"
 	"github.com/PapayaJuice/goose/input"
 )
 
 // Game ...
 type Game struct {
-	keyboard input.Keyboard
-	font     graphics.Font
-	score    int
+	audioPlayer audio.Player
+	keyboard    input.Keyboard
+	font        graphics.Font
+	score       int
 
 	bulletTexture graphics.Texture
 	bullets       []*Bullet
 
-	enemyTexture graphics.Texture
-	enemyTicker  *time.Ticker
-	enemies      []*Enemy
+	enemyTexture      graphics.Texture
+	enemyDestroySound audio.Sound
+	enemyTicker       *time.Ticker
+	enemies           []*Enemy
 
 	player *Player
 }
 
 // Init ...
 func (g *Game) Init() error {
+	ap, err := goose.NewAudioPlayer()
+	if err != nil {
+		return fmt.Errorf("error initializing audio player: %v", err)
+	}
+	err = ap.SetVolume(0.2)
+	if err != nil {
+		return fmt.Errorf("error setting volume: %v", err)
+	}
+	g.audioPlayer = ap
+
+	s, err := ap.NewSound("assets/hit.wav")
+	if err != nil {
+		return fmt.Errorf("error loading enemy sound: %v", err)
+	}
+	g.enemyDestroySound = s
+
 	g.keyboard = goose.NewKeyboard()
 
 	pt, err := goose.NewTexture("assets/player.png")
@@ -89,6 +108,15 @@ func (g *Game) Close() error {
 		return fmt.Errorf("error closing font: %v", err)
 	}
 
+	err = g.audioPlayer.Close()
+	if err != nil {
+		return fmt.Errorf("error closing audio player: %v", err)
+	}
+	err = g.enemyDestroySound.Close()
+	if err != nil {
+		return fmt.Errorf("error closing enemy sound: %v", err)
+	}
+
 	return nil
 }
 
@@ -124,7 +152,7 @@ func (g *Game) Update() error {
 		e := &Enemy{
 			tex:   g.enemyTexture,
 			speed: 2,
-			x:     rand.Int31n(goose.GetWindowX()),
+			x:     rand.Int31n(goose.GetWindowX() - g.enemyTexture.W()),
 			y:     0,
 		}
 		g.enemies = append(g.enemies, e)
@@ -173,6 +201,11 @@ func (g *Game) Update() error {
 			b.destroyed = true
 			e.destroyed = true
 			g.score += 10
+
+			err := g.enemyDestroySound.Play()
+			if err != nil {
+				return fmt.Errorf("error playing sound: %v", err)
+			}
 		}
 	}
 
