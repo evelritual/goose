@@ -14,17 +14,18 @@ const (
 	minVol = 0
 )
 
-// Player ...
+// Player wraps needed methods for the audio.Player interface.
 type Player struct {
 	currVol int
 }
 
-// Sound ...
+// Sound holds SDL chunk data for playback in use with the audio.Sound interface.
 type Sound struct {
 	chunk *mix.Chunk
 }
 
-// NewAudioPlayer ...
+// NewAudioPlayer initializes the SDL mixer and returns a default Player.
+// Player must be closed manually.
 func (s *SDL2) NewAudioPlayer() (audio.Player, error) {
 	err := mix.OpenAudio(44100, mix.DEFAULT_FORMAT, 2, 4096)
 	if err != nil {
@@ -36,7 +37,8 @@ func (s *SDL2) NewAudioPlayer() (audio.Player, error) {
 	}, nil
 }
 
-// SetVolume ...
+// SetVolume sets the volume across the entire SDL player. This will not hold
+// true if new mixing channels are allocated beyond the default.
 func (p *Player) SetVolume(volume float32) error {
 	if volume < 0.0 || volume > 1.0 {
 		return fmt.Errorf("volume out of range")
@@ -55,7 +57,8 @@ func (p *Player) SetVolume(volume float32) error {
 	return nil
 }
 
-// NewSound ...
+// NewSound loads a WAV file into memory and converts it into a chunk. Sound
+// must be closed manually.
 func (p *Player) NewSound(soundPath string) (audio.Sound, error) {
 	d, err := ioutil.ReadFile(soundPath)
 	if err != nil {
@@ -72,13 +75,13 @@ func (p *Player) NewSound(soundPath string) (audio.Sound, error) {
 	}, nil
 }
 
-// Close ...
+// Close releases audio player resources and stops all playback.
 func (p *Player) Close() error {
 	mix.CloseAudio()
 	return nil
 }
 
-// Play ...
+// Play begins playback of the Sound through the sdl mixer.
 func (s *Sound) Play() error {
 	_, err := s.chunk.Play(-1, 0)
 	if err != nil {
@@ -87,7 +90,7 @@ func (s *Sound) Play() error {
 	return nil
 }
 
-// Close ...
+// Close frees the sdl chunk resource.
 func (s *Sound) Close() error {
 	s.chunk.Free()
 	return nil
