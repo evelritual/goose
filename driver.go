@@ -3,6 +3,7 @@ package goose
 import (
 	"log"
 
+	"github.com/PapayaJuice/goose/audio"
 	"github.com/PapayaJuice/goose/graphics"
 	"github.com/PapayaJuice/goose/input"
 	"github.com/PapayaJuice/goose/internal/drivers/sdl2"
@@ -27,6 +28,7 @@ type driver interface {
 	Init() error
 	CreateWindow(x, y int32, title string) error
 	Close()
+	NewAudioPlayer() (audio.Player, error)
 	NewFont(fontPath string, size int) (graphics.Font, error)
 	NewKeyboard() input.Keyboard
 	NewTexture(imgPath string) (graphics.Texture, error)
