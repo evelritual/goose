@@ -6,9 +6,12 @@
 
 Goose is a game engine written in Go :)
 
+**API in heavy development and may change**
+
 ## Table of Contents
 - [Demo](#demo)
 - [FAQ](#faq)
+- [Contributing](#contributing)
 
 ### Demo
 ![Demo GIF](demo.gif)
@@ -21,3 +24,6 @@ Go has been my daily-driver since 2016. I simply love working in it and wanted t
 **Isn't the Garbage Collection in Go bad for games?**
 
 Sure, "stop the world" garbage collection will never be great for games, especially combined with CGo. However, unless you're using this engine to create AAA masterpieces, you likely will never even notice.
+
+### Contributing
+Please do! In the future I'll add a list of hot-ticket items. For now, the audio library needs some serious love and I'd love to start looking into OpenGL rendering.
