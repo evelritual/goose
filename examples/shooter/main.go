@@ -6,9 +6,8 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/PapayaJuice/goose/audio"
-
 	"github.com/PapayaJuice/goose"
+	"github.com/PapayaJuice/goose/audio"
 	"github.com/PapayaJuice/goose/graphics"
 	"github.com/PapayaJuice/goose/input"
 )
