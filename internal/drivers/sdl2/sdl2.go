@@ -86,8 +86,10 @@ func (s *SDL2) PostDraw() {
 // accordingly.
 func (s *SDL2) Update() error {
 	// Reset all keys that were just pressed
-	for _, s := range s.keyboard.keyStates {
-		s.Repeat = true
+	if s.keyboard != nil {
+		for _, s := range s.keyboard.keyStates {
+			s.Repeat = true
+		}
 	}
 
 	// Poll SDL events

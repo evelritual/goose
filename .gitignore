@@ -15,5 +15,6 @@
 *.DS_Store
 
 # Example binaries
+examples/animation/animation
 examples/default/default
 examples/shooter/shooter
