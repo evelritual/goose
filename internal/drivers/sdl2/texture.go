@@ -55,7 +55,8 @@ func (t *Texture) H() int32 {
 
 // Draw renders the texture to the SDL renderer.
 func (t *Texture) Draw(x, y int32, scaleX, scaleY float32) error {
-	err := t.renderer.Copy(t.texture,
+	err := t.renderer.Copy(
+		t.texture,
 		&sdl.Rect{
 			X: 0,
 			Y: 0,
