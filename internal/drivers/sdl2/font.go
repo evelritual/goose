@@ -16,7 +16,7 @@ type Font struct {
 	font *ttf.Font
 }
 
-// NewFont ...
+// NewFont opens a TTF font and sets it up for use in rendering.
 func (s *SDL2) NewFont(fontPath string, size int) (graphics.Font, error) {
 	f, err := ttf.OpenFont(fontPath, size)
 	if err != nil {
@@ -29,7 +29,7 @@ func (s *SDL2) NewFont(fontPath string, size int) (graphics.Font, error) {
 	}, nil
 }
 
-// Draw ...
+// Draw renders the given text as an SDL texture and draws it to the screen.
 func (f *Font) Draw(text string, x, y int32, color graphics.Color) error {
 	c := sdl.Color{
 		R: color.R,
@@ -62,7 +62,7 @@ func (f *Font) Draw(text string, x, y int32, color graphics.Color) error {
 	return nil
 }
 
-// Close ...
+// Close releases the SDL font resource.
 func (f *Font) Close() error {
 	f.font.Close()
 	return nil
