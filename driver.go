@@ -33,7 +33,7 @@ type driver interface {
 	NewFont(fontPath string, size int) (graphics.Font, error)
 	NewKeyboard() input.Keyboard
 	NewTexture(imgPath string) (graphics.Texture, error)
-	NewTextureAtlus(imgPath string, splitX, splitY int32) (graphics.TextureAtlus, error)
+	NewTextureAtlas(imgPath string, splitX, splitY int32) (graphics.TextureAtlas, error)
 	PreDraw() error
 	PostDraw()
 	SetBackgroundColor(color *graphics.Color)

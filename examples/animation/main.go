@@ -15,17 +15,17 @@ var (
 
 // Game ...
 type Game struct {
-	playerAtlus graphics.TextureAtlus
+	playerAtlas graphics.TextureAtlas
 	frameTicker *time.Ticker
 }
 
 // Init ...
 func (g *Game) Init() error {
-	ta, err := goose.NewTextureAtlus("assets/player.png", 32, 32)
+	ta, err := goose.NewTextureAtlas("assets/player.png", 32, 32)
 	if err != nil {
-		return fmt.Errorf("error loading texture atlus: %v", err)
+		return fmt.Errorf("error loading texture atlas: %v", err)
 	}
-	g.playerAtlus = ta
+	g.playerAtlas = ta
 	g.frameTicker = time.NewTicker(1 * time.Second)
 
 	goose.SetBackgroundColor(&graphics.ColorWhite)
@@ -38,7 +38,7 @@ func (g *Game) Update() error {
 	select {
 	case <-g.frameTicker.C:
 		playerFrame++
-		if playerFrame >= g.playerAtlus.Len() {
+		if playerFrame >= g.playerAtlas.Len() {
 			playerFrame = 0
 		}
 	default:
@@ -49,7 +49,7 @@ func (g *Game) Update() error {
 
 // Draw ...
 func (g *Game) Draw() error {
-	g.playerAtlus.Draw(
+	g.playerAtlas.Draw(
 		playerFrame,
 		(goose.GetWindowX()/2)-16,
 		(goose.GetWindowY()/2)-16,
@@ -62,7 +62,7 @@ func (g *Game) Draw() error {
 // Close ...
 func (g *Game) Close() error {
 	g.frameTicker.Stop()
-	return g.playerAtlus.Close()
+	return g.playerAtlas.Close()
 }
 
 func main() {
