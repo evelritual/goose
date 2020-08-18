@@ -9,6 +9,11 @@ import (
 	"github.com/PapayaJuice/goose/graphics"
 )
 
+var (
+	windowX int32
+	windowY int32
+)
+
 // SDL2 implements the Driver interface.
 type SDL2 struct {
 	clearColor *graphics.Color
@@ -41,6 +46,8 @@ func (s *SDL2) CreateWindow(x, y int32, title string) error {
 		return fmt.Errorf("error creating sdl window: %v", err)
 	}
 	s.window = w
+	windowX = x
+	windowY = y
 
 	r, err := sdl.CreateRenderer(w, -1, sdl.RENDERER_ACCELERATED|sdl.RENDERER_PRESENTVSYNC)
 	if err != nil {
