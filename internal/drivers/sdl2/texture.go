@@ -55,7 +55,19 @@ func (t *Texture) H() int32 {
 
 // Draw renders the texture to the SDL renderer.
 func (t *Texture) Draw(x, y int32, scaleX, scaleY float32) error {
-	err := t.renderer.Copy(
+	// Handle negative scale to flip
+	// TODO: Handle flipping both X and Y
+	flip := sdl.FLIP_NONE
+	if scaleX < 0 {
+		scaleX = -scaleX
+		flip = sdl.FLIP_HORIZONTAL
+	}
+	if scaleY < 0 {
+		scaleX = -scaleY
+		flip = sdl.FLIP_VERTICAL
+	}
+
+	err := t.renderer.CopyEx(
 		t.texture,
 		&sdl.Rect{
 			X: 0,
@@ -64,11 +76,14 @@ func (t *Texture) Draw(x, y int32, scaleX, scaleY float32) error {
 			H: t.h,
 		},
 		&sdl.Rect{
-			X: x,
-			Y: y,
-			W: int32(float32(t.w) * scaleX),
-			H: int32(float32(t.h) * scaleY),
+			X: int32(float32(x+offsetX) * scaleFactorX),
+			Y: int32(float32(y+offsetY) * scaleFactorY),
+			W: int32(float32(t.w) * scaleX * scaleFactorX),
+			H: int32(float32(t.h) * scaleY * scaleFactorY),
 		},
+		0.0,
+		nil,
+		flip,
 	)
 
 	if err != nil {
