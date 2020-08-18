@@ -4,6 +4,12 @@ import (
 	"github.com/PapayaJuice/goose/graphics"
 )
 
+// NewCamera creates a new camera for use in rendering the viewport in an
+// altered state. Initial position starts at 0,0.
+func NewCamera() (graphics.Camera, error) {
+	return activeDriver.NewCamera()
+}
+
 // NewFont loads a new ttf font for use in drawing text. Font must be closed
 // after use.
 func NewFont(fontPath string, size int) (graphics.Font, error) {
