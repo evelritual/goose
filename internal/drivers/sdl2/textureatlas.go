@@ -9,9 +9,9 @@ import (
 	"github.com/PapayaJuice/goose/graphics"
 )
 
-// TextureAtlus wraps an SDL Texture. It splits the texture into tiles to
+// TextureAtlas wraps an SDL Texture. It splits the texture into tiles to
 // allow for easy drawing of sprites in a spritesheet.
-type TextureAtlus struct {
+type TextureAtlas struct {
 	renderer *sdl.Renderer // reference to renderer to use
 
 	image   *sdl.Surface
@@ -22,9 +22,9 @@ type TextureAtlus struct {
 	tileW int32
 }
 
-// NewTextureAtlus loads an image as an SDL texture and splices it into
+// NewTextureAtlas loads an image as an SDL texture and splices it into
 // separate rectangles for use in drawing.
-func (s *SDL2) NewTextureAtlus(imgPath string, splitX, splitY int32) (graphics.TextureAtlus, error) {
+func (s *SDL2) NewTextureAtlas(imgPath string, splitX, splitY int32) (graphics.TextureAtlas, error) {
 	img, err := img.Load(imgPath)
 	if err != nil {
 		return nil, fmt.Errorf("error loading image: %v", err)
@@ -48,7 +48,7 @@ func (s *SDL2) NewTextureAtlus(imgPath string, splitX, splitY int32) (graphics.T
 		return nil, fmt.Errorf("error creating texture: %v", err)
 	}
 
-	return &TextureAtlus{
+	return &TextureAtlas{
 		renderer: s.renderer,
 		image:    img,
 		texture:  tex,
@@ -59,7 +59,7 @@ func (s *SDL2) NewTextureAtlus(imgPath string, splitX, splitY int32) (graphics.T
 }
 
 // Draw renders the texture of the given tile to the SDL renderer.
-func (t *TextureAtlus) Draw(tile int, x, y int32, scaleX, scaleY float32) error {
+func (t *TextureAtlas) Draw(tile int, x, y int32, scaleX, scaleY float32) error {
 	if tile > len(t.tiles)-1 {
 		return fmt.Errorf("tile out of range")
 	}
@@ -96,13 +96,13 @@ func (t *TextureAtlus) Draw(tile int, x, y int32, scaleX, scaleY float32) error 
 	return nil
 }
 
-// Len returns the number of spliced tiles in the texture atlus.
-func (t *TextureAtlus) Len() int {
+// Len returns the number of spliced tiles in the texture atlas.
+func (t *TextureAtlas) Len() int {
 	return len(t.tiles)
 }
 
 // Close releases the texture and the image from memory.
-func (t *TextureAtlus) Close() error {
+func (t *TextureAtlas) Close() error {
 	err := t.texture.Destroy()
 	if err != nil {
 		return fmt.Errorf("error destroying sdl texture: %v", err)
