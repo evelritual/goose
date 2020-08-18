@@ -29,6 +29,7 @@ type driver interface {
 	CreateWindow(x, y int32, title string) error
 	Close()
 	NewAudioPlayer() (audio.Player, error)
+	NewCamera() (graphics.Camera, error)
 	NewFont(fontPath string, size int) (graphics.Font, error)
 	NewKeyboard() input.Keyboard
 	NewTexture(imgPath string) (graphics.Texture, error)
