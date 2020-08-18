@@ -35,9 +35,10 @@ func (s *SDL2) NewTextureAtlus(imgPath string, splitX, splitY int32) (graphics.T
 	b := img.Bounds().Size()
 	w := int32(b.X) / splitX
 	h := int32(b.Y) / splitY
+
 	tiles := []*sdl.Rect{}
-	for x := int32(0); x < w; x++ {
-		for y := int32(0); y < h; y++ {
+	for y := int32(0); y < h; y++ {
+		for x := int32(0); x < w; x++ {
 			tiles = append(tiles, &sdl.Rect{X: x * splitX, Y: y * splitY, W: splitX, H: splitY})
 		}
 	}
