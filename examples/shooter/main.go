@@ -251,7 +251,7 @@ func (g *Game) Draw() error {
 	}
 
 	// UI
-	err = g.scoreLabel.Draw(5, 0, 1.0, 1.0)
+	err = g.scoreLabel.Draw(5, 0, 1.0, 1.0, 0.0)
 	if err != nil {
 		return fmt.Errorf("error drawing font: %v", err)
 	}
