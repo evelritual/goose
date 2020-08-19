@@ -17,6 +17,7 @@ type Game struct {
 	audioPlayer audio.Player
 	keyboard    input.Keyboard
 	font        graphics.Font
+	scoreLabel  graphics.Texture
 	score       int
 
 	bulletTexture graphics.Texture
@@ -80,6 +81,12 @@ func (g *Game) Init() error {
 		return fmt.Errorf("error loading font: %v", err)
 	}
 	g.font = f
+
+	st, err := f.Texture("score: 0", graphics.ColorWhite)
+	if err != nil {
+		return fmt.Errorf("error converting font to texture: %v", err)
+	}
+	g.scoreLabel = st
 
 	return nil
 }
@@ -182,6 +189,7 @@ func (g *Game) Update() error {
 	}
 	g.bullets = newBullets
 
+	newScore := g.score
 	// This is terrible collision detection but whatever
 	for _, b := range g.bullets {
 		for _, e := range g.enemies {
@@ -200,13 +208,22 @@ func (g *Game) Update() error {
 			// Otherwise, collision
 			b.destroyed = true
 			e.destroyed = true
-			g.score += 10
+			newScore += 10
 
 			err := g.enemyDestroySound.Play()
 			if err != nil {
 				return fmt.Errorf("error playing sound: %v", err)
 			}
 		}
+	}
+
+	if newScore != g.score {
+		st, err := g.font.Texture(fmt.Sprintf("score: %d", newScore), graphics.ColorWhite)
+		if err != nil {
+			return fmt.Errorf("error converting font to texture: %v", err)
+		}
+		g.scoreLabel = st
+		g.score = newScore
 	}
 
 	return nil
@@ -234,7 +251,7 @@ func (g *Game) Draw() error {
 	}
 
 	// UI
-	err = g.font.Draw(fmt.Sprintf("Score: %d", g.score), 5, 0, graphics.ColorWhite)
+	err = g.scoreLabel.Draw(5, 0, 1.0, 1.0)
 	if err != nil {
 		return fmt.Errorf("error drawing font: %v", err)
 	}

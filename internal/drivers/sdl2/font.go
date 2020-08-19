@@ -29,8 +29,24 @@ func (s *SDL2) NewFont(fontPath string, size int) (graphics.Font, error) {
 	}, nil
 }
 
-// Draw renders the given text as an SDL texture and draws it to the screen.
-func (f *Font) Draw(text string, x, y int32, color graphics.Color) error {
+// SetFont loads a new font. All future calls to Texture will use the newly
+// loaded font.
+func (f *Font) SetFont(fontPath string, size int) error {
+	font, err := ttf.OpenFont(fontPath, size)
+	if err != nil {
+		return fmt.Errorf("error loading sdl font: %v", err)
+	}
+
+	f2 := f.font
+	defer f2.Close()
+
+	f.font = font
+	return nil
+}
+
+// Texture loads the font as a drawable texture. Texture must be closed
+// manually.
+func (f *Font) Texture(text string, color graphics.Color) (graphics.Texture, error) {
 	c := sdl.Color{
 		R: color.R,
 		G: color.G,
@@ -40,26 +56,27 @@ func (f *Font) Draw(text string, x, y int32, color graphics.Color) error {
 
 	t, err := f.font.RenderUTF8Blended(text, c)
 	if err != nil {
-		return fmt.Errorf("error rendering sdl text: %v", err)
+		return nil, fmt.Errorf("error rendering sdl text: %v", err)
 	}
 	defer t.Free()
 
 	tex, err := f.renderer.CreateTextureFromSurface(t)
 	if err != nil {
-		return fmt.Errorf("error creating sdl surface for font: %v", err)
+		return nil, fmt.Errorf("error creating sdl surface for font: %v", err)
 	}
-	defer tex.Destroy()
 
 	_, _, w, h, err := tex.Query()
 	if err != nil {
-		return fmt.Errorf("error querying sdl font info: %v", err)
+		return nil, fmt.Errorf("error querying sdl font info: %v", err)
 	}
 
-	err = f.renderer.Copy(tex, nil, &sdl.Rect{X: x, Y: y, W: w, H: h})
-	if err != nil {
-		return fmt.Errorf("error rendering sdl font on screen: %v", err)
-	}
-	return nil
+	return &Texture{
+		renderer: f.renderer,
+		image:    nil,
+		texture:  tex,
+		w:        w,
+		h:        h,
+	}, nil
 }
 
 // Close releases the SDL font resource.
