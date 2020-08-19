@@ -59,7 +59,7 @@ func (s *SDL2) NewTextureAtlas(imgPath string, splitX, splitY int32) (graphics.T
 }
 
 // Draw renders the texture of the given tile to the SDL renderer.
-func (t *TextureAtlas) Draw(tile int, x, y int32, scaleX, scaleY float32) error {
+func (t *TextureAtlas) Draw(tile int, x, y int32, scaleX, scaleY float32, rotation float64) error {
 	if tile > len(t.tiles)-1 {
 		return fmt.Errorf("tile out of range")
 	}
@@ -85,7 +85,7 @@ func (t *TextureAtlas) Draw(tile int, x, y int32, scaleX, scaleY float32) error 
 			W: int32(float32(t.tileW) * scaleX * scaleFactorX),
 			H: int32(float32(t.tileH) * scaleY * scaleFactorY),
 		},
-		0.0,
+		rotation,
 		nil,
 		flip,
 	)

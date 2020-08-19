@@ -214,20 +214,20 @@ func (g *Game) Update() error {
 
 // Draw ...
 func (g *Game) Draw() error {
-	err := g.player.tex.Draw(g.player.x, g.player.y, 1.0, 1.0)
+	err := g.player.tex.Draw(g.player.x, g.player.y, 1.0, 1.0, 0.0)
 	if err != nil {
 		return fmt.Errorf("error drawing player texture: %v", err)
 	}
 
 	for _, e := range g.enemies {
-		err = e.tex.Draw(e.x, e.y, 1.0, 1.0)
+		err = e.tex.Draw(e.x, e.y, 1.0, 1.0, 0.0)
 		if err != nil {
 			return fmt.Errorf("error drawing enemy texture: %v", err)
 		}
 	}
 
 	for _, b := range g.bullets {
-		err = b.tex.Draw(b.x, b.y, 1.0, 1.0)
+		err = b.tex.Draw(b.x, b.y, 1.0, 1.0, 0.0)
 		if err != nil {
 			return fmt.Errorf("error drawing bullet texture: %v", err)
 		}
