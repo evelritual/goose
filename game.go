@@ -60,7 +60,7 @@ func (d *defaultGame) Draw() error {
 		return nil
 	}
 
-	err := d.tex.Draw(d.texX, d.texY, 0.125, 0.125)
+	err := d.tex.Draw(d.texX, d.texY, 0.125, 0.125, 0.0)
 	if err != nil {
 		return fmt.Errorf("error drawing default image: %v", err)
 	}

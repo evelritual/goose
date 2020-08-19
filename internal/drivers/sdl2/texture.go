@@ -54,7 +54,7 @@ func (t *Texture) H() int32 {
 }
 
 // Draw renders the texture to the SDL renderer.
-func (t *Texture) Draw(x, y int32, scaleX, scaleY float32) error {
+func (t *Texture) Draw(x, y int32, scaleX, scaleY float32, rotation float64) error {
 	// Handle negative scale to flip
 	// TODO: Handle flipping both X and Y
 	flip := sdl.FLIP_NONE
@@ -81,7 +81,7 @@ func (t *Texture) Draw(x, y int32, scaleX, scaleY float32) error {
 			W: int32(float32(t.w) * scaleX * scaleFactorX),
 			H: int32(float32(t.h) * scaleY * scaleFactorY),
 		},
-		0.0,
+		rotation,
 		nil,
 		flip,
 	)

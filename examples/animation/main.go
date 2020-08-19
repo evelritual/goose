@@ -55,6 +55,7 @@ func (g *Game) Draw() error {
 		(goose.GetWindowY()/2)-16,
 		1.0,
 		1.0,
+		0.0,
 	)
 	return nil
 }
