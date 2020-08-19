@@ -99,6 +99,8 @@ func (t *Texture) Close() error {
 		return fmt.Errorf("error destroying sdl texture: %v", err)
 	}
 
-	t.image.Free()
+	if t.image != nil {
+		t.image.Free()
+	}
 	return nil
 }
