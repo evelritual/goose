@@ -41,7 +41,7 @@ func (k *Keyboard) IsKeyPress(keyCode input.Key) bool {
 	return false
 }
 
-// IsKeyRelease returns true if the given key is pressed for the first time.
+// IsKeyRelease returns true if the given key is release for the first time.
 func (k *Keyboard) IsKeyRelease(keyCode input.Key) bool {
 	if ks, exists := k.keyStates[keyCode]; exists {
 		return !ks.Pressed && !ks.Repeat

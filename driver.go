@@ -32,6 +32,7 @@ type driver interface {
 	NewCamera() (graphics.Camera, error)
 	NewFont(fontPath string, size int) (graphics.Font, error)
 	NewKeyboard() input.Keyboard
+	NewMouse() input.Mouse
 	NewTexture(imgPath string) (graphics.Texture, error)
 	NewTextureAtlas(imgPath string, splitX, splitY int32) (graphics.TextureAtlas, error)
 	PreDraw() error
