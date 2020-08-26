@@ -21,6 +21,7 @@ type SDL2 struct {
 	window     *sdl.Window
 
 	keyboard *Keyboard
+	mouse    *Mouse
 }
 
 // Init initializes everything in the SDL2 library.
@@ -94,13 +95,19 @@ func (s *SDL2) PostDraw() {
 func (s *SDL2) Update() error {
 	// Reset all keys that were just pressed
 	if s.keyboard != nil {
-		for _, s := range s.keyboard.keyStates {
-			s.Repeat = true
+		for _, st := range s.keyboard.keyStates {
+			st.Repeat = true
+		}
+	}
+	if s.mouse != nil {
+		for _, st := range s.mouse.buttonStates {
+			st.Repeat = true
 		}
 	}
 
 	// Poll SDL events
 	for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
+		// TODO Handle mouse wheel
 		switch t := event.(type) {
 		case *sdl.QuitEvent:
 			return fmt.Errorf("exit")
@@ -110,6 +117,16 @@ func (s *SDL2) Update() error {
 			}
 			// TODO handle unknown key press
 			s.keyboard.UpdateKey(keyMap[t.Keysym.Sym], t.State == sdl.PRESSED, t.Repeat != 0)
+		case *sdl.MouseButtonEvent:
+			if s.mouse == nil {
+				break
+			}
+			s.mouse.UpdateButton(mouseButtonMap[t.Button], t.X, t.Y, t.State == sdl.PRESSED)
+		case *sdl.MouseMotionEvent:
+			if s.mouse == nil {
+				break
+			}
+			s.mouse.UpdatePosition(t.X, t.Y)
 		}
 	}
 	return nil

@@ -6,3 +6,8 @@ import "github.com/PapayaJuice/goose/input"
 func NewKeyboard() input.Keyboard {
 	return activeDriver.NewKeyboard()
 }
+
+// NewMouse initializes a new mouse for use based on the active driver.
+func NewMouse() input.Mouse {
+	return activeDriver.NewMouse()
+}
