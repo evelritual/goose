@@ -19,41 +19,41 @@ func (s *SDL2) NewKeyboard() input.Keyboard {
 
 // IsKeyDown returns true if the given key is pressed.
 func (k *Keyboard) IsKeyDown(keyCode input.Key) bool {
-	if k, exists := k.keyStates[keyCode]; exists {
-		return k.Pressed
+	if ks, exists := k.keyStates[keyCode]; exists {
+		return ks.Pressed
 	}
 	return false
 }
 
 // IsKeyUp returns true of the given key is not pressed.
 func (k *Keyboard) IsKeyUp(keyCode input.Key) bool {
-	if k, exists := k.keyStates[keyCode]; exists {
-		return !k.Pressed
+	if ks, exists := k.keyStates[keyCode]; exists {
+		return !ks.Pressed
 	}
 	return false
 }
 
 // IsKeyPress returns true if the given key is pressed for the first time.
 func (k *Keyboard) IsKeyPress(keyCode input.Key) bool {
-	if k, exists := k.keyStates[keyCode]; exists {
-		return k.Pressed && !k.Repeat
+	if ks, exists := k.keyStates[keyCode]; exists {
+		return ks.Pressed && !ks.Repeat
 	}
 	return false
 }
 
 // IsKeyRelease returns true if the given key is pressed for the first time.
 func (k *Keyboard) IsKeyRelease(keyCode input.Key) bool {
-	if k, exists := k.keyStates[keyCode]; exists {
-		return !k.Pressed && !k.Repeat
+	if ks, exists := k.keyStates[keyCode]; exists {
+		return !ks.Pressed && !ks.Repeat
 	}
 	return false
 }
 
 // UpdateKey updates the state of the given key to the keyboard state map.
 func (k *Keyboard) UpdateKey(keyCode input.Key, pressed, repeat bool) {
-	if k, exists := k.keyStates[keyCode]; exists {
-		k.Pressed = pressed
-		k.Repeat = repeat
+	if ks, exists := k.keyStates[keyCode]; exists {
+		ks.Pressed = pressed
+		ks.Repeat = repeat
 		return
 	}
 
