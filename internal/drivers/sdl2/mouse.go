@@ -104,3 +104,8 @@ func (m *Mouse) UpdatePosition(x, y int32) {
 	m.X = x
 	m.Y = y
 }
+
+// Pos returns the current X and Y position of the mouse.
+func (m *Mouse) Pos() (int32, int32) {
+	return m.X, m.Y
+}
