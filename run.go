@@ -39,7 +39,8 @@ func Run(game Game) error {
 	// Cap at target FPS
 	// TODO Allow when targetFPS = 0 (unlimited)
 	fpst := 1000 / targetFPS
-	for range time.Tick(time.Duration(fpst) * time.Millisecond) {
+	drawChan := time.Tick(time.Duration(fpst) * time.Millisecond)
+	for {
 		// Update driver state first
 		err = activeDriver.Update()
 		if err != nil {
@@ -50,16 +51,23 @@ func Run(game Game) error {
 		if err != nil {
 			break
 		}
-
-		err = activeDriver.PreDraw()
+		select {
+		case <-drawChan:
+			err = activeDriver.PreDraw()
+			if err != nil {
+				break
+			}
+			err = game.Draw()
+			if err != nil {
+				break
+			}
+			activeDriver.PostDraw()
+		default:
+			break
+		}
 		if err != nil {
 			break
 		}
-		err = game.Draw()
-		if err != nil {
-			break
-		}
-		activeDriver.PostDraw()
 	}
 	return err
 }
