@@ -13,4 +13,5 @@ type Mouse interface {
 	IsRelease(button MouseButton) (bool, int32, int32)
 	UpdateButton(button MouseButton, x, y int32, pressed bool)
 	UpdatePosition(x, y int32)
+	Pos() (int32, int32)
 }
