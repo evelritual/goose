@@ -27,7 +27,12 @@ var (
 type driver interface {
 	Init() error
 	CreateWindow(x, y int32, title string) error
+	SetBackgroundColor(color *graphics.Color)
 	Close()
+
+	DisableCursor() error
+	EnableCursor() error
+
 	NewAudioPlayer() (audio.Player, error)
 	NewCamera() (graphics.Camera, error)
 	NewFont(fontPath string, size int) (graphics.Font, error)
@@ -35,9 +40,9 @@ type driver interface {
 	NewMouse() input.Mouse
 	NewTexture(imgPath string) (graphics.Texture, error)
 	NewTextureAtlas(imgPath string, splitX, splitY int32) (graphics.TextureAtlas, error)
+
 	PreDraw() error
 	PostDraw()
-	SetBackgroundColor(color *graphics.Color)
 	Update() error
 }
 

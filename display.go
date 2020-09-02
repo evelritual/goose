@@ -35,3 +35,13 @@ func GetWindowY() int32 {
 func SetWindowTitle(title string) {
 	windowTitle = title
 }
+
+// DisableCursor disables rendering of the hardware cursor.
+func DisableCursor() error {
+	return activeDriver.DisableCursor()
+}
+
+// EnableCursor enables rendering of the hardware cursor.
+func EnableCursor() error {
+	return activeDriver.EnableCursor()
+}
