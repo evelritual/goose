@@ -127,8 +127,8 @@ func (g *Game) Close() error {
 	return nil
 }
 
-// Update ...
-func (g *Game) Update() error {
+// FixedUpdate ...
+func (g *Game) FixedUpdate() error {
 	// Input
 	if g.keyboard.IsKeyDown(input.KeyArrowLeft) {
 		g.player.x -= g.player.speed
@@ -226,6 +226,11 @@ func (g *Game) Update() error {
 		g.score = newScore
 	}
 
+	return nil
+}
+
+// Update ...
+func (g *Game) Update() error {
 	return nil
 }
 

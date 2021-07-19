@@ -15,6 +15,7 @@ const (
 type Game interface {
 	Close() error
 	Draw() error
+	FixedUpdate() error
 	Init() error
 	Update() error
 }
@@ -67,15 +68,8 @@ func (d *defaultGame) Draw() error {
 	return nil
 }
 
-// Update ...
-func (d *defaultGame) Update() error {
-	if d.keyboard.IsKeyPress(input.KeySpace) {
-		d.shouldDraw = false
-	}
-	if d.keyboard.IsKeyRelease(input.KeySpace) {
-		d.shouldDraw = true
-	}
-
+// FixedUpdate ..
+func (d *defaultGame) FixedUpdate() error {
 	if d.texX <= 0 || d.texX+(d.tex.W()/8) >= windowX {
 		d.speedX = 0 - d.speedX
 	}
@@ -85,6 +79,18 @@ func (d *defaultGame) Update() error {
 
 	d.texX += d.speedX
 	d.texY += d.speedY
+
+	return nil
+}
+
+// Update ...
+func (d *defaultGame) Update() error {
+	if d.keyboard.IsKeyPress(input.KeySpace) {
+		d.shouldDraw = false
+	}
+	if d.keyboard.IsKeyRelease(input.KeySpace) {
+		d.shouldDraw = true
+	}
 
 	return nil
 }
