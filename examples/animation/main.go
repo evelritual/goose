@@ -33,6 +33,11 @@ func (g *Game) Init() error {
 	return nil
 }
 
+// FixedUpdate ...
+func (g *Game) FixedUpdate() error {
+	return nil
+}
+
 // Update ...
 func (g *Game) Update() error {
 	select {

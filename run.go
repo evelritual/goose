@@ -51,8 +51,14 @@ func Run(game Game) error {
 		if err != nil {
 			break
 		}
+
 		select {
 		case <-drawChan:
+			err = game.FixedUpdate()
+			if err != nil {
+				break
+			}
+
 			err = activeDriver.PreDraw()
 			if err != nil {
 				break
