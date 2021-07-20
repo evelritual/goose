@@ -128,7 +128,7 @@ func (g *Game) Close() error {
 }
 
 // FixedUpdate ...
-func (g *Game) FixedUpdate() error {
+func (g *Game) FixedUpdate(elapsedTime time.Duration) error {
 	// Input
 	if g.keyboard.IsKeyDown(input.KeyArrowLeft) {
 		g.player.x -= g.player.speed
