@@ -1,6 +1,6 @@
 package goose
 
-import "github.com/PapayaJuice/goose/graphics"
+import "github.com/evelritual/goose/graphics"
 
 var (
 	windowTitle       = "Goose Engine"

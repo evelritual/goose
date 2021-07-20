@@ -1,7 +1,7 @@
 package sdl2
 
 import (
-	"github.com/PapayaJuice/goose/graphics"
+	"github.com/evelritual/goose/graphics"
 )
 
 var (

@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/PapayaJuice/goose"
+	"github.com/evelritual/goose"
 )
 
 // This example simply opens a new Goose game window and displays the default

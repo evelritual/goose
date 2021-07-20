@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/PapayaJuice/goose/graphics"
+	"github.com/evelritual/goose/graphics"
 )
 
 // Bullet ...
