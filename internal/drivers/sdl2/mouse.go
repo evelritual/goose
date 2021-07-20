@@ -1,8 +1,9 @@
 package sdl2
 
 import (
-	"github.com/PapayaJuice/goose/input"
 	"github.com/veandco/go-sdl2/sdl"
+
+	"github.com/evelritual/goose/input"
 )
 
 var (

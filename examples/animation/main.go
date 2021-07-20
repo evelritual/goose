@@ -5,8 +5,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/PapayaJuice/goose"
-	"github.com/PapayaJuice/goose/graphics"
+	"github.com/evelritual/goose"
+	"github.com/evelritual/goose/graphics"
 )
 
 var (

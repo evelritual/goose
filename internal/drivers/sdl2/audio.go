@@ -6,7 +6,7 @@ import (
 
 	"github.com/veandco/go-sdl2/mix"
 
-	"github.com/PapayaJuice/goose/audio"
+	"github.com/evelritual/goose/audio"
 )
 
 const (

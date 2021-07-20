@@ -1,7 +1,7 @@
 package sdl2
 
 import (
-	"github.com/PapayaJuice/goose/input"
+	"github.com/evelritual/goose/input"
 )
 
 // Keyboard wraps a map of SDL keys and their current states.

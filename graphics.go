@@ -1,7 +1,7 @@
 package goose
 
 import (
-	"github.com/PapayaJuice/goose/graphics"
+	"github.com/evelritual/goose/graphics"
 )
 
 // NewCamera creates a new camera for use in rendering the viewport in an

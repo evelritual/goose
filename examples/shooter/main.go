@@ -6,10 +6,10 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/PapayaJuice/goose"
-	"github.com/PapayaJuice/goose/audio"
-	"github.com/PapayaJuice/goose/graphics"
-	"github.com/PapayaJuice/goose/input"
+	"github.com/evelritual/goose"
+	"github.com/evelritual/goose/audio"
+	"github.com/evelritual/goose/graphics"
+	"github.com/evelritual/goose/input"
 )
 
 // Game ...

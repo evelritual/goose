@@ -3,10 +3,10 @@ package goose
 import (
 	"log"
 
-	"github.com/PapayaJuice/goose/audio"
-	"github.com/PapayaJuice/goose/graphics"
-	"github.com/PapayaJuice/goose/input"
-	"github.com/PapayaJuice/goose/internal/drivers/sdl2"
+	"github.com/evelritual/goose/audio"
+	"github.com/evelritual/goose/graphics"
+	"github.com/evelritual/goose/input"
+	"github.com/evelritual/goose/internal/drivers/sdl2"
 )
 
 const (

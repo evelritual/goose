@@ -3,8 +3,8 @@ package goose
 import (
 	"fmt"
 
-	"github.com/PapayaJuice/goose/graphics"
-	"github.com/PapayaJuice/goose/input"
+	"github.com/evelritual/goose/graphics"
+	"github.com/evelritual/goose/input"
 )
 
 const (

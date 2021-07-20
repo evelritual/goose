@@ -6,7 +6,7 @@ import (
 	"github.com/veandco/go-sdl2/img"
 	"github.com/veandco/go-sdl2/sdl"
 
-	"github.com/PapayaJuice/goose/graphics"
+	"github.com/evelritual/goose/graphics"
 )
 
 // TextureAtlas wraps an SDL Texture. It splits the texture into tiles to

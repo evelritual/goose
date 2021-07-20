@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/PapayaJuice/goose"
-	"github.com/PapayaJuice/goose/graphics"
+	"github.com/evelritual/goose"
+	"github.com/evelritual/goose/graphics"
 )
 
 // Map represents a Tiled map.
