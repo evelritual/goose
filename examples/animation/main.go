@@ -34,7 +34,7 @@ func (g *Game) Init() error {
 }
 
 // FixedUpdate ...
-func (g *Game) FixedUpdate() error {
+func (g *Game) FixedUpdate(elapsedTime time.Duration) error {
 	return nil
 }
 

@@ -2,6 +2,7 @@ package goose
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/evelritual/goose/graphics"
 	"github.com/evelritual/goose/input"
@@ -15,7 +16,7 @@ const (
 type Game interface {
 	Close() error
 	Draw() error
-	FixedUpdate() error
+	FixedUpdate(time.Duration) error
 	Init() error
 	Update() error
 }
@@ -25,10 +26,10 @@ type defaultGame struct {
 
 	tex        graphics.Texture
 	shouldDraw bool
-	texX       int32
-	texY       int32
-	speedX     int32
-	speedY     int32
+	texX       float64
+	texY       float64
+	speedX     float64
+	speedY     float64
 }
 
 // Init ...
@@ -42,11 +43,11 @@ func (d *defaultGame) Init() error {
 	d.tex = t
 	d.shouldDraw = true
 
-	d.texX = (windowX / 2) - (d.tex.W() / 16)
-	d.texY = (windowY / 2) - (d.tex.H() / 16)
+	d.texX = float64((windowX / 2) - (d.tex.W() / 16))
+	d.texY = float64((windowY / 2) - (d.tex.H() / 16))
 
-	d.speedX = 3
-	d.speedY = 2
+	d.speedX = 60
+	d.speedY = 40
 
 	return nil
 }
@@ -61,7 +62,7 @@ func (d *defaultGame) Draw() error {
 		return nil
 	}
 
-	err := d.tex.Draw(d.texX, d.texY, 0.125, 0.125, 0.0)
+	err := d.tex.Draw(int32(d.texX), int32(d.texY), 0.125, 0.125, 0.0)
 	if err != nil {
 		return fmt.Errorf("error drawing default image: %v", err)
 	}
@@ -69,16 +70,16 @@ func (d *defaultGame) Draw() error {
 }
 
 // FixedUpdate ..
-func (d *defaultGame) FixedUpdate() error {
-	if d.texX <= 0 || d.texX+(d.tex.W()/8) >= windowX {
+func (d *defaultGame) FixedUpdate(elapsedTime time.Duration) error {
+	if d.texX <= 0 || int32(d.texX)+(d.tex.W()/8) >= windowX {
 		d.speedX = 0 - d.speedX
 	}
-	if d.texY <= 0 || d.texY+(d.tex.H()/8) >= windowY {
+	if d.texY <= 0 || int32(d.texY)+(d.tex.H()/8) >= windowY {
 		d.speedY = 0 - d.speedY
 	}
 
-	d.texX += d.speedX
-	d.texY += d.speedY
+	d.texX += d.speedX * elapsedTime.Seconds()
+	d.texY += d.speedY * elapsedTime.Seconds()
 
 	return nil
 }
